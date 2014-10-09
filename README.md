@@ -1,7 +1,7 @@
-Chela
+Chela!
 ======
 
-Recursive, asynchronous chmod and chown on Node.js.
+Recursive, asynchronous chmod and chown on Node.js, and maybe something else.
 
 Install
 -------
@@ -16,19 +16,20 @@ var chmod = require('chela').mod;
 
 chmod('/home/tomas/.ssh', '0700', function(err, modified) {
   if (!err) 
-    console.log(modified.length); // prints number of files that were modified
+    console.log(modified); // prints list of files that were modified
 })
 
 var chown = require('chela').own;
 
-chmod('/tmp/foobar.txt', 'tomas', 'users', function(err) {
-  if (err)
+chown('/tmp/foobar.txt', 'tomas', 'users', function(err) {
+  if (!err)
     console.log('Successfully chowned to tomas:users');
 })
 ```
 
-You can also omit the group (third) param, in which case chela will default to 
-either the wheel group (on OSX) or a group matching the username.
+When calling chown(), you can also omit the group (third) param, in which case 
+chela will default to either the wheel group (on OS X) or a group matching the 
+username (Linux and others). This is because OS X does not create a group for each username. 
 
 Credits
 -------
