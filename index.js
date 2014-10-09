@@ -33,7 +33,7 @@ function get_ids(user, group, cb) {
 }
 
 //////////////////////////////////////////////////////
-// the remover object
+// luke filewalker
 
 function walk(dir, fn, cb) {
   debug('Walking directory: ' + dir);
