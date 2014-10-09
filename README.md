@@ -6,7 +6,7 @@ Recursive, asynchronous chmod and chown on Node.js, and maybe something else.
 Install
 -------
 
-    npm install clela
+    npm install chela
 
 Example
 -----
