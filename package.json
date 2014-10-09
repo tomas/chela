@@ -1,0 +1,15 @@
+{
+  "name": "chela",
+  "version": "0.0.1",
+  "description": "Recursive, async chmod and chown.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tomas Pollak <tomas@forkhq.com>",
+  "license": "WTFPL",
+  "dependencies": {
+    "graceful-fs": "^3.0.3",
+    "uid-number": "0.0.5"
+  }
+}

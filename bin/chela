@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+var chela        = require('../'),
+    command      = process.argv[2],
+    path         = process.argv[3],
+    user_or_mode = process.argv[4],
+    group        = process.argv[5];
+
+function abort(str, code) {
+  console.log(str) || process.exit(code || 1);
+}
+
+if (!user_or_mode || user_or_mode == '') {
+  abort('Usage: \n  chela mod [path] [mode]\n  chela own [path] [user] [group]', 2);
+}
+
+function done(err, modified) {
+  if (err) return abort(err.message);
+
+  console.log('Done. ' + modified.length + ' entries modified.');
+}
+
+if (command == 'own')
+  chela.own(path, user_or_mode, group, done)
+else 
+  chela.mod(path, user_or_mode, done);
