@@ -38,8 +38,7 @@ function get_ids(user, group, cb) {
 function walk(dir, fn, cb) {
   debug('Walking directory: ' + dir);
 
-  var self = this,
-      count,
+  var count,
       last_err,
       files_modified = [];
 
@@ -65,7 +64,7 @@ function walk(dir, fn, cb) {
   fs.readdir(dir, function(err, files) {
     if (err) { // or stopped
       if (err.code == 'ENOTDIR')
-        return finished(true);
+        return finished();
       else
         return cb(err);
     }
