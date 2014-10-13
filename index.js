@@ -66,10 +66,10 @@ function walk(dir, fn, cb) {
       if (err.code == 'ENOTDIR')
         return finished();
       else
-        return cb(err);
+        return done(err);
     }
     else if (files.length == 0)
-      return cb();
+      return finished();
 
     count = files.length;
 

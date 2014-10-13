@@ -11,5 +11,9 @@
   "dependencies": {
     "graceful-fs": "^3.0.3",
     "uid-number": "0.0.5"
+  },
+  "devDependencies": {
+    "should": "",
+    "rimraf": ""
   }
 }
