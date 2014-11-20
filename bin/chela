@@ -18,9 +18,10 @@ function done(err, modified) {
   if (err) return abort(err.message);
 
   console.log('Done. ' + modified.length + ' entries modified.');
+  if (process.env.DEBUG) console.log(modified);
 }
 
 if (command == 'own')
   chela.own(path, user_or_mode, group, done)
-else 
+else
   chela.mod(path, user_or_mode, done);

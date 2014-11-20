@@ -24,11 +24,11 @@ function get_ids(user, group, cb) {
   debug('Getting IDs for user ' + user + ' and group ' + group);
   uid_number(user, group, function(err, uid, gid) {
     if (err) return cb(err);
-    
+
     uids[user]  = uid;
     gids[group] = gid;
 
-    cb(null, uid, gid); 
+    cb(null, uid, gid);
   })
 }
 
@@ -54,7 +54,7 @@ function walk(dir, fn, cb) {
 
   var finished = function() {
     fn(dir, function(err) {
-      if (!err) 
+      if (!err)
         files_modified.push(dir);
 
       cb(err || last_err, files_modified);
@@ -85,6 +85,9 @@ function walk(dir, fn, cb) {
         } else {
           fn(path, function(err) {
             if (!err) files_modified.push(path);
+
+            // handle unexisting symlinks
+            // var e = err && err.code != 'ENOENT' ? err : null;
             done(err);
           });
         }
@@ -94,32 +97,49 @@ function walk(dir, fn, cb) {
 
 }
 
-function chmod(path, mode, cb) {
-  var fn = function(file, cb) {
-    debug('Chmodding ' + file + ' to ' + mode);
-    fs.chmod(file, mode, cb);
-  }
+function chmod(method) {
 
-  walk(resolve(path), fn, cb);
-}
-
-function chown(path, user, group, cb) {
-  if (typeof group == 'function') {
-    var cb = group;
-    group = null;
-  }
-
-  get_ids(user, group, function(err, uid, gid) {
-    if (err) return cb(err);
+  return function mod(path, mode, cb) {
+    if (!fs[method])
+      return cb(new Error(method + ' not supported.'));
 
     var fn = function(file, cb) {
-      debug('Chowning ' + file + ' to uid ' + uid + ' and gid ' + gid);
-      fs.chown(file, uid, gid, cb);
+      debug(method + 'ing ' + file + ' to ' + mode);
+      fs[method](file, mode, cb);
     }
 
     walk(resolve(path), fn, cb);
-  })
+  }
+
 }
 
-exports.own = chown;
-exports.mod = chmod;
+function chown(method) {
+
+  return function own(path, user, group, cb) {
+    if (!fs[method])
+      return cb(new Error(method + ' not supported.'));
+
+    if (typeof group == 'function') {
+      var cb = group;
+      group = null;
+    }
+
+    get_ids(user, group, function(err, uid, gid) {
+      if (err) return cb(err);
+
+      var fn = function(file, cb) {
+        console.log(method + 'ing ' + file + ' to uid ' + uid + ' and gid ' + gid);
+        fs[method](file, uid, gid, cb);
+      }
+
+      walk(resolve(path), fn, cb);
+    })
+
+  }
+}
+
+exports.mod  = chmod('chmod');
+exports.own  = chown('chown');
+
+exports.lmod = chmod('lchmod');
+exports.lown = chown('lchown');
