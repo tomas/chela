@@ -78,7 +78,7 @@ function walk(dir, fn, cb) {
 
       fs.lstat(path, function(err, stat) {
         if (err) // or stopped
-          return cb(err);
+          return done(err);
 
         if (stat.isDirectory()) { // recurse
           walk(path, fn, done);

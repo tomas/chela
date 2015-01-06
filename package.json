@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "should": "",
-    "rimraf": ""
+    "rimraf": "",
+    "sinon": ""
   }
 }
