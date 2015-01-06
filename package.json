@@ -1,6 +1,6 @@
 {
   "name": "chela",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Recursive async chmod and chown.",
   "main": "index.js",
   "scripts": {
