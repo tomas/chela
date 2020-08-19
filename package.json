@@ -9,7 +9,7 @@
   "author": "Tomas Pollak <tomas@forkhq.com>",
   "license": "WTFPL",
   "dependencies": {
-    "graceful-fs": "^3.0.3",
+    "graceful-fs": "^4.2.4",
     "uid-number": "0.0.5"
   },
   "devDependencies": {
